@@ -10,7 +10,7 @@ export default function Cta() {
             Summon
           </h2>
           <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
-            A tool that enhances web3 games with analytics and community-built
+            A tool that enhances web3 games with community-built
             gaming experiences.
           </p>
           <div className="inline-block mx-auto">
