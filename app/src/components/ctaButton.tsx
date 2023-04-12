@@ -46,7 +46,7 @@ export default function CtaButton() {
           </defs>
         </svg>
         <span className="w-full">
-          Great. Let's now create character dialogues and assets for our
+          Great. Let's now create character dialogues and assets for Post-Industrial, our first
           community-built game.
         </span>
       </a>
