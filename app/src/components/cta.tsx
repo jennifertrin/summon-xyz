@@ -1,5 +1,5 @@
 import "flowbite";
-import DynamicContextProvider from "./ContextProvider/DynamicContextProvider";
+import DynamicContextProvider from "../components/ContextProvider/DynamicContextProvider";
 
 export default function Cta() {
   return (
