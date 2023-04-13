@@ -7,21 +7,34 @@ export default function CharacterSection() {
       description: "A government official determined to transform the city",
       cta: "Chat with them",
       photoHref: "/Mayor.jpeg",
-      photoAlt: "The face of a modern-day mayor with a determined look"
+      photoAlt: "The face of a modern-day mayor with a determined look",
+      characterAddress: "0x5cf264fb15e275b14fba764e3d4d3e723b67b573",
+      characterHref: "/characters/Mayor",
     },
     {
-        title: "Businessman",
-        description: "A businessman seeking old school traditions in business",
-        cta: "Chat with them",
-        photoHref: "/Businessman.jpeg",
-        photoAlt: "The face of a corrupt, traditional businessman"
-      },
+      title: "Businessman",
+      description: "A businessman seeking old school traditions in business",
+      cta: "Chat with them",
+      photoHref: "/Businessman.jpeg",
+      photoAlt: "The face of a corrupt, traditional businessman",
+      characterAddress: "0x8a1abaf2ba96cd557a606aa9b403770edcd9f1b4",
+      characterHref: "/characters/Businessman",
+    },
   ];
   return (
     <section className="bg-white dark:bg-gray-900 flex flex-row gap-6">
-        {characters.map((character) => (
-            <CharacterBox title={character.title} description={character.description} cta={character.cta} photoHref={character.photoHref} photoAlt={character.photoAlt} />
-        ))}
+      {characters.map((character) => (
+        <CharacterBox
+          key={character.title}
+          title={character.title}
+          description={character.description}
+          cta={character.cta}
+          photoHref={character.photoHref}
+          photoAlt={character.photoAlt}
+          characterAddress={character.characterAddress}
+          characterHref={character.characterHref}
+        />
+      ))}
     </section>
   );
 }
