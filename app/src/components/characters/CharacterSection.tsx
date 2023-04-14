@@ -4,7 +4,7 @@ export default function CharacterSection() {
   const characters = [
     {
       title: "Mayor",
-      description: "A government official determined to transform the city",
+      description: "A government official determined to revitalize the city",
       cta: "Chat with them",
       photoHref: "/Mayor.jpeg",
       photoAlt: "The face of a modern-day mayor with a determined look",
@@ -13,7 +13,7 @@ export default function CharacterSection() {
     },
     {
       title: "Businessman",
-      description: "A businessman seeking old school traditions in business",
+      description: "A businessman utilizing the remaining resources of the city",
       cta: "Chat with them",
       photoHref: "/Businessman.jpeg",
       photoAlt: "The face of a corrupt, traditional businessman",
