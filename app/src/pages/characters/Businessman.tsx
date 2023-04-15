@@ -29,7 +29,7 @@ export default function Businessman() {
             characterAddress={character.characterAddress}
             characterHref={character.characterHref}
           />
-          <Chat address={character.characterAddress} />
+          <Chat address={character.characterAddress} title={character.title} />
         </div>
       ))}
     </section>

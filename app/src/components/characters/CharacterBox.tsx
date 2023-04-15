@@ -27,22 +27,37 @@ export default function CharacterBox({
   const { primaryWallet } = useDynamicContext();
   const router = useRouter();
 
-  const [messages, setMessages] = useState<DecodedMessage[]>([]);
-  const [client, setClient] = useState<any>();
-  const [xmtpClientAddress, setXmtpClientAddress] = useState<any>();
-
   const initXmtp = async function () {
     const signer = (await primaryWallet?.connector.getSigner()) as Signer;
     const xmtp = await Client.create(signer, { env: "dev" });
     const conversation = await xmtp.conversations.newConversation(
-      characterAddress
+      characterAddress,
+      {
+        conversationId: `postIndustrial/${title}-main-chat`,
+        metadata: { game: "postIndustrial" },
+      }
     );
-    const messages = await conversation.messages({
-      direction: SortDirection.SORT_DIRECTION_DESCENDING,
-    });
-    setClient(conversation);
-    setMessages(messages);
-    setXmtpClientAddress(xmtp.address);
+    const conversation1 = await xmtp.conversations.newConversation(
+      characterAddress,
+      {
+        conversationId: `postIndustrial/${title}-scene-1`,
+        metadata: { game: "postIndustrial" },
+      }
+    );
+    const conversation2 = await xmtp.conversations.newConversation(
+      characterAddress,
+      {
+        conversationId: `postIndustrial/${title}-scene-2`,
+        metadata: { game: "postIndustrial" },
+      }
+    );
+    const conversation3 = await xmtp.conversations.newConversation(
+      characterAddress,
+      {
+        conversationId: `postIndustrial/${title}-scene-3`,
+        metadata: { game: "postIndustrial" },
+      }
+    );
   };
 
   const chatWithCharacter = async function () {

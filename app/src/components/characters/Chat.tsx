@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Client, DecodedMessage, SortDirection } from "@xmtp/xmtp-js";
+import {
+  Client,
+  Conversation,
+  DecodedMessage,
+  SortDirection,
+} from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import { Signer } from "ethers";
 // import Pusher from "pusher-js/with-encryption";
-import 'flowbite';
+import "flowbite";
+import ConversationList from "./ConversationList";
 
 type MessageListProps = {
   msg: DecodedMessage[];
@@ -11,6 +17,7 @@ type MessageListProps = {
 
 type Chat = {
   address: string;
+  title: string;
 };
 
 type apiData = {
@@ -21,28 +28,33 @@ type apiResponse = {
   image: string;
 };
 
-function App({ address }: Chat) {
+function App({ address, title }: Chat) {
   const { primaryWallet } = useDynamicContext();
 
   const [messages, setMessages] = useState<DecodedMessage[]>([]);
+  const [conversations, setConversations] = useState<Conversation[]>();
   const [client, setClient] = useState<any>();
   const [xmtpClientAddress, setXmtpClientAddress] = useState<any>();
   const [prompt, setPrompt] = useState<string>("");
   const [imageGenerating, setImageGenerating] = useState<boolean>(false);
   const [apiResponse, setApiResponse] = useState<apiResponse>();
 
-  const initXmtp = async function () {
-    const signer = (await primaryWallet?.connector.getSigner()) as Signer;
-    const xmtp = await Client.create(signer, { env: "local" });
-    const conversation = await xmtp.conversations.newConversation(address);
-    const messages = await conversation.messages({
-      direction: SortDirection.SORT_DIRECTION_DESCENDING,
-    });
-
-    setClient(conversation);
-    setMessages(messages);
-    setXmtpClientAddress(xmtp.address);
-  };
+  useEffect(() => {
+    async function getConversations() {
+      const signer = (await primaryWallet?.connector.getSigner()) as Signer;
+      const xmtp = await Client.create(signer, { env: "dev" });
+      const conversations = await xmtp.conversations.list();
+      const characterConversations = conversations.filter(
+        (convo) =>
+          convo.context?.conversationId &&
+          convo.context.conversationId.startsWith(`postIndustrial/${title}`)
+      );
+      if (characterConversations) {
+        setConversations(characterConversations);
+      }
+    }
+    getConversations();
+  }, []);
 
   useEffect(() => {
     if (xmtpClientAddress) {
@@ -113,6 +125,8 @@ function App({ address }: Chat) {
     }
   };
 
+  console.log("conversations", conversations);
+
   //   useEffect(() => {
   //     if (apiResponse) {
   //
@@ -125,10 +139,13 @@ function App({ address }: Chat) {
   //   }, [apiResponse]);
 
   return (
-    <div className="flex flex-row w-full">
+    <div className="flex flex-col w-full">
       {primaryWallet && (
         <>
           <MessageList msg={messages} />
+          {conversations ? (
+            <ConversationList conversations={conversations} />
+          ) : null}
           <div className="w-full flex-col flex">
             <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
               <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
