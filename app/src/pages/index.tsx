@@ -8,7 +8,7 @@ export default function Home() {
   const { primaryWallet } = useDynamicContext();
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 bg-white">
+    <main className={`flex min-h-screen flex-col items-center ${primaryWallet ? 'p-20' : 'p-24'} bg-white`}>
       <Cta />
       {primaryWallet ? (
         <div className="mx-auto w-full items-center">

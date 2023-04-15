@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Client, DecodedMessage, SortDirection } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import { Signer } from "ethers";
-import Pusher from "pusher-js/with-encryption";
+// import Pusher from "pusher-js/with-encryption";
+import 'flowbite';
 
 type MessageListProps = {
   msg: DecodedMessage[];
@@ -70,6 +71,8 @@ function App({ address }: Chat) {
   };
 
   const fetchAPI = async ({ prompt }: apiData) => {
+    setImageGenerating(true);
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -89,7 +92,6 @@ function App({ address }: Chat) {
     const id = result.id;
 
     if (result) {
-      setImageGenerating(true);
       setTimeout(async function () {
         var raw = JSON.stringify({
           id: id,
@@ -105,6 +107,7 @@ function App({ address }: Chat) {
         const result = await response.json();
         if (result) {
           setApiResponse(result);
+          setImageGenerating(false);
         }
       }, 30000);
     }
@@ -131,6 +134,7 @@ function App({ address }: Chat) {
               <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
                 <label className="sr-only">Your comment</label>
                 <textarea
+                  disabled={imageGenerating}
                   id="comment"
                   onBlur={(e) => setPrompt(e.target.value)}
                   rows={4}
@@ -141,6 +145,7 @@ function App({ address }: Chat) {
               </div>
               <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
                 <button
+                  disabled={imageGenerating}
                   onClick={async () => await fetchAPI({ prompt })}
                   className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
                 >
@@ -149,12 +154,19 @@ function App({ address }: Chat) {
               </div>
             </div>
             {apiResponse ? (
-            <img
-              className="flex h-auto max-w-2xl mt-6 rounded-lg shadow-xl dark:shadow-gray-800"
-              src={apiResponse?.image}
-              alt={prompt}
-            />
-          ) : null}
+              <img
+                className="flex mx-auto h-auto max-w-2xl mt-6 rounded-lg shadow-xl dark:shadow-gray-800"
+                src={apiResponse?.image}
+                alt={prompt}
+              />
+            ) : null}
+            {imageGenerating ? (
+              <div className="flex items-center mt-2 justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                <div className="px-3 py-1  text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+                  generating scene...
+                </div>
+              </div>
+            ) : null}
           </div>
         </>
       )}
