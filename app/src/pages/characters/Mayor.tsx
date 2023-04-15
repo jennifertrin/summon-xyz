@@ -16,7 +16,10 @@ export default function Mayor() {
   return (
     <section className="bg-white dark:bg-gray-900">
       {characters.map((character) => (
-        <div key={character.title} className="w-full flex flex-row gap-6 p-12 h-screen">
+        <div
+          key={character.title}
+          className="w-full flex flex-row gap-6 p-12 h-screen"
+        >
           <CharacterBox
             title={character.title}
             description={character.description}
@@ -26,7 +29,7 @@ export default function Mayor() {
             characterAddress={character.characterAddress}
             characterHref={character.characterHref}
           />
-          <Chat address={character.characterAddress} />
+          <Chat address={character.characterAddress} title={character.title} />
         </div>
       ))}
     </section>
