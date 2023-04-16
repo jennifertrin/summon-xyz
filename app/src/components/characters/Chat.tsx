@@ -3,7 +3,6 @@ import {
   Client,
   Conversation,
   DecodedMessage,
-  SortDirection,
 } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import { Signer } from "ethers";
@@ -125,7 +124,6 @@ function App({ address, title }: Chat) {
     }
   };
 
-  console.log("conversations", conversations);
 
   //   useEffect(() => {
   //     if (apiResponse) {
