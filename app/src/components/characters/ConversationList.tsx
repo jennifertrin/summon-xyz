@@ -21,7 +21,7 @@ export default function ConversationList({ conversations }: ConversationList) {
     const regex = /(?<=postIndustrial\/Mayor-).*/;
     const match = conversationId.match(regex);
     if (match) {
-      return match[0].replace(/-/g, "");
+      return match[0].replace(/-/g, " ");
     } else {
       return null;
     }
