@@ -1,20 +1,15 @@
-import { Conversation } from "@xmtp/xmtp-js";
+import { Conversation, DecodedMessage } from "@xmtp/xmtp-js";
+import ChatPrompt from "./ChatPrompt";
+import { useEffect, useState } from "react";
 
 type ConversationList = {
   conversations: Conversation[] | undefined;
 };
 
 export default function ConversationList({ conversations }: ConversationList) {
-  const headers = ["Conversation Name", "Scene"];
-
-  function getConversationName(
-    conversationId: string | undefined
-  ): string | null {
-    if (!conversationId) return null;
-    const regex = /(?<=postIndustrial\/Mayor-).*/;
-    const match = conversationId?.match(regex);
-    return match ? match[0] : null;
-  }
+  const [activeTabId, setActiveTabId] = useState<string>();
+  const [activeConversation, setActiveConversation] = useState<Conversation>();
+  const [messages, setMessages] = useState<DecodedMessage[]>();
 
   function getSceneName(conversationId: string | undefined): string | null {
     if (!conversationId) return null;
@@ -27,34 +22,55 @@ export default function ConversationList({ conversations }: ConversationList) {
     }
   }
 
+  async function activeConversationMessages(conversation: Conversation) {
+    const messagesInConversation = await conversation.messages();
+    return messagesInConversation;
+  }
+
+  useEffect(() => {
+    async function getMessage() {
+      if (!activeConversation) return;
+      const conversationMessages = await activeConversationMessages(
+        activeConversation
+      );
+      setMessages(conversationMessages);
+    }
+    getMessage();
+  }, [activeConversation]);
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mb-8">
-      <table className="w-full text-sm text-left text-blue-100 dark:text-blue-100">
-        <thead className="text-xs text-white uppercase bg-blue-600 dark:text-white">
-          <tr>
-            {headers.map((header) => (
-              <th key={header} scope="col" className="px-6 py-3">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {conversations?.map((conversation) => (
-            <tr key={conversation?.context?.conversationId} className="bg-blue-500 border-b border-blue-400">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
-              >
-                {getConversationName(conversation?.context?.conversationId)}
-              </th>
-              <td className="px-6 py-4">
-                {getSceneName(conversation?.context?.conversationId)}
-              </td>
-            </tr>
+      <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+        {conversations?.map((conversation) => (
+          <li key={conversation?.context?.conversationId} className="mr-2">
+            <button
+              className={`${
+                conversation?.context?.conversationId === activeTabId
+                  ? "bg-blue-300"
+                  : ""
+              } inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500`}
+              onClick={() => {
+                setActiveTabId(conversation?.context?.conversationId);
+                setActiveConversation(conversation);
+              }}
+            >
+              {getSceneName(conversation?.context?.conversationId)}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="py-8 px-6">
+        <ul className="mb-4 flex flex-wrap text-md font-medium text-center text-gray-900 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+          {messages?.map((message) => (
+            <li className="mr-2 p-2" key={message.id}>
+              {message.content}
+            </li>
           ))}
-        </tbody>
-      </table>
+        </ul>
+        {activeConversation ? (
+          <ChatPrompt conversation={activeConversation} />
+        ) : null}
+      </div>
     </div>
   );
 }
