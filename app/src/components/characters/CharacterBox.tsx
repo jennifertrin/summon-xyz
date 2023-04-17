@@ -3,6 +3,7 @@ import { Client } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import { Signer } from "ethers";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 interface Character {
   title: string;
@@ -10,7 +11,6 @@ interface Character {
   cta: string;
   photoHref: string;
   photoAlt: string;
-  characterAddress: string;
   characterHref: string;
 }
 
@@ -20,57 +20,40 @@ export default function CharacterBox({
   cta,
   photoHref,
   photoAlt,
-  characterAddress,
   characterHref,
 }: Character) {
   const { primaryWallet } = useDynamicContext();
   const router = useRouter();
+  const [initiatingChat, setInitiatingChat] = useState<boolean>();
 
   const initXmtp = async function () {
     const signer = (await primaryWallet?.connector.getSigner()) as Signer;
     const xmtp = await Client.create(signer, { env: "dev" });
-    const allConversations = await xmtp.conversations.list();
-    const characterConversations = allConversations.filter(
-      (convo) =>
-        convo.context?.conversationId &&
-        convo.context.conversationId.startsWith(`postIndustrial/${title}`)
-    );
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-    if (characterConversations.length === 0 || !characterConversations) {
-      const conversation = await xmtp.conversations.newConversation(
-        characterAddress,
-        {
-          conversationId: `postIndustrial/${title}-main-chat`,
-          metadata: { game: "postIndustrial" },
-        }
-      );
-      const conversation1 = await xmtp.conversations.newConversation(
-        characterAddress,
-        {
-          conversationId: `postIndustrial/${title}-scene-1`,
-          metadata: { game: "postIndustrial" },
-        }
-      );
-      const conversation2 = await xmtp.conversations.newConversation(
-        characterAddress,
-        {
-          conversationId: `postIndustrial/${title}-scene-2`,
-          metadata: { game: "postIndustrial" },
-        }
-      );
-      const conversation3 = await xmtp.conversations.newConversation(
-        characterAddress,
-        {
-          conversationId: `postIndustrial/${title}-scene-3`,
-          metadata: { game: "postIndustrial" },
-        }
-      );
-    }
+    var raw = JSON.stringify({
+      userAddress: primaryWallet?.address,
+      characterTitle: title,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+    };
+
+    const response = await fetch("/api/createConversation", requestOptions);
+    const result = await response.json();
+
+    if (result.createConversation) return;
   };
 
   const chatWithCharacter = async function () {
+    setInitiatingChat(true);
     await initXmtp();
     router.push(characterHref);
+    setInitiatingChat(false);
   };
 
   return (
@@ -89,6 +72,7 @@ export default function CharacterBox({
             {description}
           </p>
           <button
+            disabled={initiatingChat}
             onClick={() => chatWithCharacter()}
             className="inline-flex items-center px-3 py-2 mt-2 text-sm cursor-pointer font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >

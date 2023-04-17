@@ -31,7 +31,6 @@ export default function CharacterSection() {
           cta={character.cta}
           photoHref={character.photoHref}
           photoAlt={character.photoAlt}
-          characterAddress={character.characterAddress}
           characterHref={character.characterHref}
         />
       ))}
