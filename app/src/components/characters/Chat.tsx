@@ -3,6 +3,7 @@ import {
   Client,
   Conversation,
   DecodedMessage,
+
 } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import { Signer } from "ethers";
@@ -27,7 +28,7 @@ type apiResponse = {
   image: string;
 };
 
-function App({ address, title }: Chat) {
+function App({ title }: Chat) {
   const { primaryWallet } = useDynamicContext();
 
   const [messages, setMessages] = useState<DecodedMessage[]>([]);
@@ -123,7 +124,6 @@ function App({ address, title }: Chat) {
       }, 30000);
     }
   };
-
 
   //   useEffect(() => {
   //     if (apiResponse) {

@@ -26,7 +26,6 @@ export default function Businessman() {
             cta={character.cta}
             photoHref={character.photoHref}
             photoAlt={character.photoAlt}
-            characterAddress={character.characterAddress}
             characterHref={character.characterHref}
           />
           <Chat address={character.characterAddress} title={character.title} />
