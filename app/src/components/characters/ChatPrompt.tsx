@@ -56,7 +56,7 @@ function App({ conversation }: App) {
   };
 
   const sendMessage = async () => {
-    await conversation.send(prompt);
+    await conversation.send(prompt + ' Design: ' + apiResponse?.image);
   };
 
   const fetchAPI = async ({ prompt }: apiData) => {
@@ -81,7 +81,6 @@ function App({ conversation }: App) {
     const id = result.id;
 
     if (result) {
-      await sendMessage();
       setTimeout(async function () {
         var raw = JSON.stringify({
           id: id,
@@ -99,7 +98,8 @@ function App({ conversation }: App) {
           setApiResponse(result);
           setImageGenerating(false);
         }
-      }, 15000);
+        setImageGenerating(false);
+      }, 30000);
     }
   };
 
@@ -128,16 +128,33 @@ function App({ conversation }: App) {
                   onClick={async () => await fetchAPI({ prompt })}
                   className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
                 >
-                  Post response
+                  Generate a response
                 </button>
               </div>
             </div>
             {apiResponse ? (
-              <img
-                className="flex mx-auto h-auto max-w-2xl mt-6 rounded-lg shadow-xl dark:shadow-gray-800"
-                src={apiResponse?.image}
-                alt={prompt}
-              />
+              <div className="flex flex-col gap-6">
+                <img
+                  className="flex mx-auto h-auto max-w-2xl mt-6 rounded-lg shadow-xl dark:shadow-gray-800"
+                  src={apiResponse?.image}
+                  alt={prompt}
+                />
+                <div className="flex flex-row">
+                  <button
+                    type="button"
+                    onClick={async () => await sendMessage()}
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >
+                    Confirm and post design
+                  </button>
+                  <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >
+                    Mint design
+                  </button>
+                </div>
+              </div>
             ) : null}
             {imageGenerating ? (
               <div className="flex items-center mt-2 justify-center w-full h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
