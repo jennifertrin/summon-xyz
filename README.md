@@ -7,7 +7,9 @@ As an example, in the application, players are introduced to Post-Industrial, a 
 
 As the game begins, players engage in conversations powered by XMTP with either of these characters. Each conversation begins with a prompt that encourages players to generate a new city design based on the intentions and goals of the character they are collaborating with while also ensuring the balance and stability of the city. We utilized XMTP since using its blockchain technology would promote thoughtfulness in generating designs, and it would enable players to have ownership over the dialogues they engage in with in-game characters.
 
-Users can mint their scenes and dialogues as NFTs on Polygon zkEVM testnet chain. Polygon zkEVM is a fast, efficient chain. Long-term, we can mint from the marketplace address and use zk technology to include any of the user's game play information while maintaining their privacy.
+Players can mint their scenes and dialogues as NFTs on Polygon zkEVM testnet chain. Polygon zkEVM is a fast, efficient chain. Long-term, we can mint from the marketplace address and use zk technology to include any of the user's game play information while maintaining their privacy.
+
+By allowing users to create and mint their own scenes, players own the assets and parts of the creative process of the game. 
 
 Contract address on Polygon zkEVM: 0x06A46ad6DE3B469B56Dc75F4348C5130Edbca1fF
 
@@ -15,7 +17,9 @@ To read more about the **game synopsis**, as well as view AI-generated game asse
 
 **Demo Application**: https://summon-xyz.vercel.app
 
-**Demo Video (No Narrative)**: https://youtu.be/GPShAFuVTfg
+**Full Demo Video - For New Deadline of 4/18/23 at 23:59**: https://youtu.be/IPFz21wWlLU
+
+**Original Demo Video - Before Extended Deadline of 4/18/23 at 16:00**: https://youtu.be/GPShAFuVTfg
 
 
 
