@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PolygonZkevmTestnet } from "@thirdweb-dev/chains";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk/evm";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
 interface Data {
   prompt: string;
