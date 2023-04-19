@@ -29,12 +29,13 @@ export default async function handler(
       const contract = await sdk.getContract(
         "0x06A46ad6DE3B469B56Dc75F4348C5130Edbca1fF"
       );
+
       const tx = await contract.erc721.mintTo(address, metadata);
-      const receipt = tx.receipt;
-      const tokenId = tx.id;
+      const hashId = tx.receipt.transactionHash;
       const nft = await tx.data();
 
-      res.status(200).json({ prompt, image, address });
+
+      res.status(200).json({ prompt, image, address, hashId });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
