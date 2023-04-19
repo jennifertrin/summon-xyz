@@ -27,6 +27,7 @@ export default function CharacterBox({
   const [initiatingChat, setInitiatingChat] = useState<boolean>();
 
   const initXmtp = async function () {
+    setInitiatingChat(true);
     const signer = (await primaryWallet?.connector.getSigner()) as Signer;
     const xmtp = await Client.create(signer, { env: "dev" });
     var myHeaders = new Headers();
@@ -46,14 +47,14 @@ export default function CharacterBox({
     const response = await fetch("/api/createConversation", requestOptions);
     const result = await response.json();
 
-    if (result.createConversation) return;
+    if (result.createConversation) {
+      setInitiatingChat(false);
+      return;
+    }
   };
 
   const chatWithCharacter = async function () {
-    setInitiatingChat(true);
     await initXmtp();
-    router.push(characterHref);
-    setInitiatingChat(false);
   };
 
   return (
@@ -74,7 +75,7 @@ export default function CharacterBox({
           <button
             disabled={initiatingChat}
             onClick={() => chatWithCharacter()}
-            className="inline-flex items-center px-3 py-2 mt-2 text-sm cursor-pointer font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="inline-flex items-center px-3 py-2 mt-2 text-sm cursor-pointer font-medium text-center text-white bg-blue-700 disabled:bg-blue-400 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             {cta}
             <svg
