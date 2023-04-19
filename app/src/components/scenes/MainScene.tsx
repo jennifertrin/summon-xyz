@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 export default function MainScene() {
   return (
     <section className="bg-white dark:bg-gray-900 flex">

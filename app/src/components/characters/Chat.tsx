@@ -33,7 +33,7 @@ function App({ title }: Chat) {
       }
     }
     getConversations();
-  }, []);
+  }, [primaryWallet?.connector, title]);
 
   return (
     <div className="flex flex-col w-full">

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import "flowbite";
 import { Client } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
@@ -55,6 +56,7 @@ export default function CharacterBox({
 
   const chatWithCharacter = async function () {
     await initXmtp();
+    router.push(characterHref);
   };
 
   return (

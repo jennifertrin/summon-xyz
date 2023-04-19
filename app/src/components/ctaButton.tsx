@@ -6,7 +6,7 @@ export default function CtaButton() {
         className="text-center mx-auto p-4 text-sm font-medium text-gray-500 rounded-lg bg-gray-50 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
       >
         <span className="w-full">
-          You're now connected! Let's now create character dialogues and assets for Post-Industrial, our first
+          You are now connected! Let us now create character dialogues and assets for Post-Industrial, our first
           community-built game.
         </span>
       </a>
