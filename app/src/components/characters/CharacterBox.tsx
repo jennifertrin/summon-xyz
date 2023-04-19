@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import "flowbite";
 import { Client } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
