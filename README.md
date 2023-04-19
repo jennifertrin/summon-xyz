@@ -9,7 +9,7 @@ As the game begins, players engage in conversations powered by XMTP with either 
 
 Users can mint their scenes and dialogues as NFTs on Polygon zkEVM testnet chain. Polygon zkEVM is a fast, efficient chain. Long-term, we can mint from the marketplace address and use zk technology to include any of the user's game play information while maintaining their privacy.
 
-Contract address on Polygon zkEVM: 0xC8CFe36AdE4B938143dd9144CcCB49f04819CE76
+Contract address on Polygon zkEVM: 0x06A46ad6DE3B469B56Dc75F4348C5130Edbca1fF
 
 To read more about the **game synopsis**, as well as view AI-generated game assets using Art Official Intelligence, please review: https://docs.google.com/document/d/1BZcFatRqAchQT8z-G5Ri5GIn2afD5BWjqIkkTjRh6dc/edit?usp=sharing
 
