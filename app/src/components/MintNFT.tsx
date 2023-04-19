@@ -1,9 +1,6 @@
 import React from "react";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
-import { PolygonZkevmTestnet } from "@thirdweb-dev/chains";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk/evm";
 import "flowbite";
-import { Signer, ethers } from "ethers";
 
 type Mint = {
     prompt: string,
@@ -31,7 +28,7 @@ function MintNFT({prompt, image} : Mint) {
       body: raw,
     };
 
-    const response = await fetch("/api/mintNFTs", requestOptions);
+    const response = await fetch("/api/mintNFT", requestOptions);
     const result = await response.json();
     return result;
   };
