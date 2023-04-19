@@ -55,6 +55,7 @@ export default function CharacterBox({
 
   const chatWithCharacter = async function () {
     await initXmtp();
+    router.push(characterHref);
   };
 
   return (

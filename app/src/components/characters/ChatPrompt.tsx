@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Conversation, DecodedMessage } from "@xmtp/xmtp-js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react";
 import "flowbite";
+import MintNFT from "../MintNFT";
 
 type MessageListProps = {
   msg: DecodedMessage[];
@@ -147,13 +148,7 @@ function App({ conversation }: App) {
                   >
                     Confirm and post design
                   </button>
-                  <button
-                    disabled={true}
-                    type="button"
-                    className="text-white bg-blue-700 disabled:bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    Mint design (Comming Soon!)
-                  </button>
+                  <MintNFT prompt={prompt} image={apiResponse?.image} />
                 </div>
               </div>
             ) : null}
